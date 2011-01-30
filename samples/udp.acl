@@ -1,0 +1,9 @@
+
+! this is wrong
+access-list 156 permit udp host 195.250.128.32 0.0.0.3 eq 53 195.122.222.10 
+
+
+! right
+access-list 156 permit udp 195.250.128.32 0.0.0.3 eq 53 host 195.122.222.10 
+
+

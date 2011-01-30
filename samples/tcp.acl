@@ -1,0 +1,27 @@
+
+! various TCP rules
+
+! test network and EQ specifier
+access-list 129 permit tcp host 195.1.2.5 195.5.8.0 0.0.0.255 eq 22
+
+! test various TCP flags specifiers
+access-list 129 permit tcp host 195.1.2.5 195.5.8.0 0.0.0.255 eq 22 syn
+access-list 129 permit tcp host 195.1.2.5 195.5.8.0 0.0.0.255 eq 22 fin
+access-list 129 permit tcp host 195.1.2.5 195.5.8.0 0.0.0.255 eq 22 rst
+access-list 129 permit tcp host 195.1.2.5 195.5.8.0 0.0.0.255 eq 22 ack
+access-list 129 permit tcp host 195.1.2.5 195.5.8.0 0.0.0.255 eq 22 psh
+access-list 129 permit tcp host 195.1.2.5 195.5.8.0 0.0.0.255 eq 22 urg
+
+! combination of TCP flags should be also possible
+access-list 129 permit tcp any any eq 23 syn fin urg ack
+access-list 129 permit tcp any any eq 23 ack fin
+! but each flag can be specified only once
+! this should produce error:
+access-list 129 permit tcp any any eq 23 syn syn
+! acl ~ established (it is almost the same, but after established is
+! specified, rst cannot be specified. not the same with ack)
+! this should produce error:
+access-list 129 permit tcp any any eq 23 ack established
+! this should produce error:
+access-list 129 permit tcp any any eq 23 established rst
+

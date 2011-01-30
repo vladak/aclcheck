@@ -1,0 +1,49 @@
+
+acltest is tool for testing if given traffic will/will not pass given
+ruleset.
+
+
+requirements:
+  - reasonably fast
+  - syntax of acltest should be subset of ipftest(1) syntax
+
+
+design:
+  - store ruleset in memory in linked list of structures
+    - this is pretty reasonable, since Cisco ACLs are processed lineary
+      (or at least appear to be)
+  - store packet specification in structure of same type as structures
+    used for storing ACL
+  - make some function compare one structure against another
+
+operation
+  1. parse ACL into list of structs
+  2. should parse input into internal structure
+  3. compare input structure against every structure of linked list from
+     step 1 and remember if it matched (and how) or not
+  4. after traversing whole linked list, present result
+
+
+ipftest notes:
+  - FreeBSD as a reference:
+
+    src/contrib/ipfilter:
+      ipt.c - ipftest binary
+      ipft_tx.c - ipftest text format
+      		  - there are other formats of ipftest input, but
+		    acltest will support only text input
+      		- contains parseline() which does input parsing
+		  - we will not use this function, rather we will use
+		    bison/flex
+
+  - ipftest supports icmp specifiers (but it is not written in ipftest
+    man page)
+
+  char    *tx_icmptypes[] = {
+        "echorep", (char *)NULL, (char *)NULL, "unreach", "squench",
+        "redir", (char *)NULL, (char *)NULL, "echo", "routerad",
+        "routersol", "timex", "paramprob", "timest", "timestrep",
+        "inforeq", "inforep", "maskreq", "maskrep", "END"
+  };
+
+

@@ -1,0 +1,53 @@
+.TH aclcheck 1
+.SH NAME
+aclcheck \- Cisco IOS extended ACL syntax checker.
+.SH SYNOPSIS
+.B aclcheck
+[
+.B \-v
+] 
+.B 
+<aclfile>
+.SH DESCRIPTION
+.PP
+\fBaclcheck\fP is syntax checker/parser for Cisco IOS access lists in
+extended format. It can be used for 
+.nf
+
+	- learning Cisco ACL syntax
+	- creating ACL storage/reload system
+.fi
+.PP
+For maintaining complex security policies with large ACLs, it may be
+suitable to store ACLs in repository. (cvs or the like) 
+ACLs can be loaded from repository directly to Cisco boxes. Before that,
+they should be checked they are syntactically correct. This is what
+aclcheck does.
+.PP
+Simplified syntax of extended ACLs is 
+.nf
+		"access-list" aclnumber "permit"|"deny" 
+			["tcp"|"udp"|"icmp"|protonum]
+			srcspec dstspec protospecifier
+.fi
+.PP
+More on Cisco IOS ACL syntax can be found on aclcheck's webpage.
+.SH OPTIONS
+.TP
+.B \-v
+Verbose mode. Can be multiplied in order to get more verbose/debug output.
+.SH EXAMPLES
+Can be found in samples/ directory in 
+.B aclcheck 
+distribution.
+.SH AUTHOR
+Vladimir Kotal <vlada@devnull.cz>
+.SH WEBPAGE
+http://techie.devnull.cz/aclcheck
+.SH BUGS
+There might be still some bugs in grammar specification. Extended ACL grammar
+can be different on miscellaneous IOS versions - this is not reflected in
+aclcheck. Standard ACL syntax is not supported at this time.
+
+aclcheck can be more strict than IOS CLI in some cases. this requires
+input to be the same as IOS config output.

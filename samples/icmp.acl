@@ -1,0 +1,9 @@
+
+
+access-list 133 permit icmp any any 8 0
+
+access-list 133 permit icmp any any echo
+
+access-list 133 permit icmp any any dod-net-prohibited
+
+

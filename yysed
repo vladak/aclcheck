@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# taken from Thomas Ptacek's scroopt
+# modified by Vladimir Kotal <vlada@devnull.cz>, 2004
+#
+
+if [ $# -ne 2 ]; then
+  echo "usage: $0 <filename> <tag>"
+  exit 1;
+fi
+
+TAGNAME="$2"
+
+cat $1 | sed "{
+	s/yylhs/yy${TAGNAME}lhs/g
+	s/yylen/yy${TAGNAME}len/g
+	s/yydefred/yy${TAGNAME}defred/g
+	s/yydgoto/yy${TAGNAME}dgoto/g
+	s/yysindex/yy${TAGNAME}sindex/g
+	s/yyrindex/yy${TAGNAME}rindex/g
+	s/yygindex/yy${TAGNAME}gindex/g
+	s/yytable/yy${TAGNAME}table/g
+	s/yycheck/yy${TAGNAME}check/g
+	s/yydebug/yy${TAGNAME}debug/g
+	s/yy_create_buffer/yy${TAGNAME}_create_buffer/g
+	s/yy_load_buffer_state/yy${TAGNAME}_load_buffer_state/g
+	s/yyrestart/yy${TAGNAME}restart/g
+	s/yy_init_buffer/yy${TAGNAME}_init_buffer/g
+	s/yy_switch_to_buffer/yy${TAGNAME}_switch_to_buffer/g
+	s/yy_delete_buffer/yy${TAGNAME}_delete_buffer/g
+	s/yy_flush_buffer/yy${TAGNAME}_flush_buffer/g
+	s/yy_scan_buffer/yy${TAGNAME}_scan_buffer/g
+	s/yy_scan_string/yy${TAGNAME}_scan_string/g
+	s/yy_scan_bytes/yy${TAGNAME}_scan_bytes/g
+	s/yyparse/yy${TAGNAME}parse/g
+}" > $1.$$
+mv -f $1.$$ $1
+
+# 	s/yyin/yyextin/g
+#	s/yyout/yyextout/g
+#	s/yylex/yyextlex/g
+#	s/yyerror/yyexterror/g

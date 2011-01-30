@@ -1,0 +1,13 @@
+
+
+access-list 129 permit tcp host 217.31.197.24 eq tacacs host 195.250.128.8
+
+
+! eq, neq
+access-list 2351 permit udp host 1.2.3.4 neq 34 host 9.9.9.9 eq 1111
+
+! following rule should produce error
+! (lower port should come first)
+! access-list 2311 permit udp host 192.168.1.34 host 172.20.1.52 range 8000 3300
+
+

@@ -1,0 +1,16 @@
+
+- lex.l ipv4-compatible IPv6 addr regrex
+- configure
+- protocol specification for the right proto
+  e.g. for icmp check that we have the right specs
+- add standard ACLs support (just like ipv6 support was added)
+- update and broaden man page
+- ipv6 ACLs syntax verification
+  - regress and cleanup
+- acltest
+  - similar to ipftest(1), syntax of acltest input should be the same 
+    in order to automate searches (iptest + acltest)
+  - evaluation of ACL against given packet src/dst specification
+    - can be used for ensuring that ACL is right
+- cleanup
+  fix all occurences of XXX and 'if 0' in source code

@@ -1,0 +1,41 @@
+
+ipv6 access-list TEST==IN
+  remark PERMIT-PRODUCTION--IN
+  permit ipv6 2001:1508::/32 any
+  remark DENY-6BONE--IN
+  deny ipv6 3ffe:1508::/32 any
+  deny ipv6 3ffe:1508::/32 3ffe:1500::/48
+  deny ipv6 any host 3ffe:dead:beef::1
+  deny ipv6 host 3ffe:1001::2 host 3ffe:1003::3
+  remark DEFAULT-DENY--IN
+  deny ipv6 any any
+! XXX exit
+!
+
+ipv6 access-list HHHH==IN
+  default deny 0 any any sequence 1234
+  deny 0 any any sequence 1234
+!
+
+ipv6 access-list ICMPv6==IN
+  permit icmp any any beyond-scope
+  permit icmp any host 2002:1010::2 mld-query log
+!
+
+
+! NOTE: log-update and treshold are not part of ipv6 ACL header
+! NOTE: it is not possible to specify threshold without log-update
+ipv6 access-list log-update threshold 1 
+! BAD: ipv6 access-list log-update 
+! BAD: ipv6 access-list threshold 1
+
+
+!ipv6 access-list IPv6-ACCESS-2-SIX-SCND==IN
+! deny ipv6 2001:1508::/32 any
+! deny ipv6 host 3FFE:80EF:101:2::2 any
+!		           ^^^ ^ (ipv6 addr portion can have 1-4 chars)
+! permit ipv6 any 2001:1508::/32
+! permit ipv6 any host 3FFE:80EF:101:2::2
+! deny ipv6 any any
+!
+

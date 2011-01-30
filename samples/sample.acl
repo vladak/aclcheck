@@ -1,0 +1,76 @@
+
+! default deny
+! access-list 130
+
+! remarks
+access-list 133 remark HUE-HUE-(lada)==OUT
+! remark longer than 100 chrs should produce err
+! access-list 133 remark AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+
+! access-list 133 deny tcp host 1.2.3.4 eq 555 host 6.7.8.9 range 1024 65536
+! access-list 133 deny ip host 1.2.3.4 eq 555 host 6.7.8.9 range 1024 65536
+! access-list 133 deny ip any any
+
+! XXX zjistit jak to je s icmp/tcp qualifier resp. cisly portu pro ip
+! access-list 133 deny ip any any established
+
+! access-list 129  permit tcp any eq 80 host 195.113.1.2
+
+! access-list 129  permit tcp host 195.250.128.80  eq 389
+
+
+! access-list 129  permit tcp any eq 80 host 195.113.1.2
+
+! - sdsd
+
+! dynamic rule
+! access-list 130 dynamic AB=- timeout 111 permit tcp host 1.2.3.4 any
+
+! port specifications
+access-list 111 deny udp any eq 80 host 12.13.14.15 range 1 4444
+access-list 111 deny udp any gt 1024 host 12.13.14.15 lt 32800
+
+! standard ACL entries
+! access-list 24 permit 195.122.207.226
+! access-list 24 deny   any
+
+! hostname is valid only for HOST keyword
+! access-list 123 permit ip host techie.devnull.cz any
+! this is invalid
+! access-list 123 permit ip techie.devnull.cz 0.0.0.255 any
+
+! precedence 
+access-list 123 permit igrp host 5.6.7.8 any precedence immediate
+
+! tos
+access-list 123 permit ip any any tos min-monetary-cost
+
+! icmp qualifier
+access-list 123 permit icmp any any 3 0
+access-list 156 permit icmp any 1.2.3.0 0.0.0.255 packet-too-big
+
+! expanded range for extended ACLs
+access-list 2313 permit tcp any any
+
+! port specifier
+access-list 123 permit tcp host 44.55.66.77 any eq ftp
+access-list 123 permit tcp host 44.55.66.77 any eq ftp-data
+access-list 123 permit tcp host 44.55.66.77 eq pop3 any range 1024 65535
+
+! established only for TCP
+access-list 123 permit tcp 1.2.3.0 0.255.255.255 any range 1024 65535 established
+! access-list 123 permit icmp 1.2.3.0 0.255.255.255 any established
+
+! port specs only for TCP/UDP
+! access-list 123 permit icmp 1.2.3.0 0.255.255.255 host 6.6.6.6 eq 22
+
+!  
+access-list 129  deny icmp any 195.16.17.0 0.0.0.255  log
+
+! tcp/udp port names
+access-list 129  permit tcp any any eq smtp
+access-list 129  permit udp any any eq tacacs
+
+
+! EOF

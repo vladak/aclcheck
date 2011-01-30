@@ -1,0 +1,3 @@
+access-list 137 remark PERMIT-IPv6-OVER-IPv4-FROM-C10PRG-jp--OUT
+access-list 137 permit 41 host 195.122.222.49 host 195.250.136.3
+

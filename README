@@ -1,0 +1,119 @@
+
+This is simple syntax checker for Extended Cisco ALCs.
+
+
+Vladimir Kotal <vlada@devnull.cz>, 2004-2005
+
+
+
+It checks syntax of the following format:
+
+access-list [list number] [permit | deny] [protocol] [source specification]
+[destination specification] [protocol qualification] [logging]
+
+list number - unsigned integer from 100 to 199
+	      (maximum number of 100 ACLs on single router, huh)
+permit|deny - 
+protocol - protocol specification. ip, tcp, udp or icmp.
+	   can be specified as protocol number (0, 6, 17, 1)
+
+	   ah		51
+	   eigrp	88
+	   esp		50
+	   gre		47
+	   icmp		1
+	   igmp		2
+	   igrp		9
+	   ip		0-255 (? XXX)
+	   ipinip	94 
+	   nos		4
+	   ospf		89
+	   tcp		6
+	   udp		17
+	   
+source specification - [IP address] [wildcard mask] [port number specification]
+			port number can be specified only for TCP or UDP
+destination specification - the same as source specification
+IP address - IPv4 or IPv6 address (without prefix ? XXX)
+wildcard mask - bitmask for IP address (making network address from single
+		IP address)
+		IPv6 prefix ? XXX
+port number specification - <eq number> | <range from to>
+			    port number can be from 0 to 65536 XXX
+			    from and to are non-inclusive XXX
+
+			    TCP/UDP:
+
+			    biff		512
+			    bootpc		68
+			    ... (XXX)
+			    
+protocol qualifiers - 
+		     - for ICMP it is type and code values e.g.
+		      3 4 (ICMP_UNREACH ICMP_UNREACH_NEEDFRAG) 
+		      or just the type
+		      17 (ICMP_MASKREQ)
+		      or it can be written as echo, echo-reply etc.
+
+			administratively-prohibited
+			alternate-address
+			conversion-error
+			dod-host-prohibited
+			dod-net-prohibited
+			echo
+			echo-reply
+			general-parameter-problem
+			host-isolated
+			mobile-redirect
+			net-redirect
+			net-tos-redirect
+			net-unreachable
+			network-unknown
+			no-room-for-option
+			option-missing
+			packet-too-big
+			parameter-problem
+			port-unreachable
+			precedence-unreachable
+			protocol-unreachable
+			host-precedence-unreachable
+			host-redirect host-tos-redirect
+			host-unknown
+			host-unreachable
+			information-reply
+			information-request
+			mask-reply
+			mask-request
+			reassemble-timeout
+			redirect
+			router-advertisement
+			router-solicitation
+			source-quench
+			source-route-failed
+			time-exceeded
+			timestamp-reply
+			timestamp-request
+			traceroute
+			ttl-exceeded
+			unreachable
+
+		      
+		     - for TCP it can be 'established' keyword
+		       which matches TCP packets with ACK bit set
+logging - keyword, log every packet matching rule contaning this keyword
+	  this keyword can be abbreviated to 'log'.
+	  this is for extended ACLs only !
+
+
+Part of this description is written according to O'Reilly's Cisco ACLs book.
+
+
+Some Cisco extended ACL examples:
+
+access-list 129  permit udp host 195.56.57.153  195.49.50.0 0.0.0.255 eq snmp
+access-list 129  deny   ip 195.81.82.0 0.0.0.255  any log
+access-list 130  permit icmp any 195.13.14.0 0.0.0.255  3 13 !  administratively-prohibited
+
+
+
+
