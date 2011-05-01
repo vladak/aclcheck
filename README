@@ -5,6 +5,8 @@ This is simple syntax checker for Extended Cisco ALCs.
 Vladimir Kotal <vlada@devnull.cz>, 2004-2005
 
 
+What is does
+------------
 
 It checks syntax of the following format:
 
@@ -108,6 +110,9 @@ logging - keyword, log every packet matching rule contaning this keyword
 Part of this description is written according to O'Reilly's Cisco ACLs book.
 
 
+Examples
+--------
+
 Some Cisco extended ACL examples:
 
 access-list 129  permit udp host 195.56.57.153  195.49.50.0 0.0.0.255 eq snmp
@@ -116,4 +121,10 @@ access-list 130  permit icmp any 195.13.14.0 0.0.0.255  3 13 !  administratively
 
 
 
+Syntax highlighting for vim
+---------------------------
+
+The file ciscoacl.vim which provides syntax highlighting for Cisco ACLs is part of this project.
+It is also hosted at
+  http://www.vim.org/scripts/script.php?script_id=1141
 
